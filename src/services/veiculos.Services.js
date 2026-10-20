@@ -6,6 +6,11 @@ class veiculosService{
         return res.rows
     }
 
+    async getById(id) {
+        const res = await pool.query("SELECT * FROM veiculos WHERE id = $1", [id])
+        return res.rows[0] ?? null
+    }
+
     async create({modelo, marca, ano, placa}) {
         const res = await pool.query("INSERT INTO veiculos (modelo,marca,ano,placa) VALUES ($1, $2, $3, $4) RETURNING *", [modelo,marca,ano,placa]);
         return res.rows[0]
